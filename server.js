@@ -4,9 +4,14 @@ import morgan from "morgan";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoute.js";
 import cors from "cors";
-import path, { dirname } from "path";
+import path from "path";
+import {fileUrlToPath} from "url"; 
 
 dotenv.config();
+
+//esmodule fix
+const __filename = fileToUrlPath(import.meta.url);
+const __dirname = path.direname(__filename);
 
 //databas config
 connectDB();
