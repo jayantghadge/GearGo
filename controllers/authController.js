@@ -83,9 +83,13 @@ export const loginController = async (req, res) => {
     }
 
     //token
-    const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = await JWT.sign(
+      { _id: user._id, email: user.email, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
     res.status(200).send({
       success: true,
       message: "Login Successfully",
@@ -108,5 +112,12 @@ export const loginController = async (req, res) => {
 };
 
 export const testController = (req, res) => {
-  res.send("Protected");
+  // Access user's data, including the cart field
+  const { name, email, phone, address, role, cart } = req.user;
+
+  res.status(200).json({
+    success: true,
+
+    user: { name, email, phone, address, role, cart },
+  });
 };
